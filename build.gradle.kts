@@ -24,6 +24,7 @@ val scalaV = "2.12"
 
 dependencies {
     compileOnly("org.scala-lang:scala-library:$scalaV.8")
+    compileOnly("org.scala-lang:scala-reflect:$scalaV.8")
     testImplementation("org.scalatest:scalatest_$scalaV:3.0.8")
 }
 
