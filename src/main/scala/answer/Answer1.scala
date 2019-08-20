@@ -1,17 +1,17 @@
-package quiz
+package answer
 
-object Quiz1 {
+object Answer1 {
   def add(a: Int, b: Int) = a + b
 
   def main(args: Array[String]): Unit = {
     val a = 1
-    val b = ???
+    val b = 1
     println("1 + 1 = " + add(a, b))
 
-    val rmb: Int = ???
+    val rmb: Int = 100000001
     val smallTarget = 100000000
 
-    val ans = if (rmb > smallTarget) {
+    val ans = if (rmb >= smallTarget) {
       "小目标达成"
     } else {
       "小目标没有达成"
