@@ -25,7 +25,7 @@ object Answer2 {
         val days = Iterator.iterate(monBegin)(_.plusDays(1)).take(dayNumOfMon).toVector
         val spaceToFill = monBegin.getDayOfWeek.getValue % 7
         println(s"         ${mon}月")
-        println(" 日 一 二 三 四 五 六")
+        println("日 一 二 三 四 五 六")
         val dasToShow =
           Vector.fill(spaceToFill)("  ") ++ days.map {
             date =>

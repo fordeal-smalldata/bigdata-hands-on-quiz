@@ -45,7 +45,7 @@ object Quiz2 {
         val dasToShow =
           Vector.fill(spaceToFill)(???) ++ days.map {
             date =>
-              date.getDayOfMonth.formatted("%02d")
+              date.getDayOfMonth.formatted(" %02d")
           }
         dasToShow.grouped(???).foreach {
           line =>
