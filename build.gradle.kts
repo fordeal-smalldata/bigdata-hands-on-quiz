@@ -25,6 +25,7 @@ val scalaV = "2.12"
 dependencies {
     compile("org.scala-lang:scala-library:$scalaV.8")
     compile("org.scala-lang:scala-reflect:$scalaV.8")
+    compile("org.json4s","json4s-jackson_$scalaV","3.6.7")
     testImplementation("org.scalatest:scalatest_$scalaV:3.0.8")
 }
 
