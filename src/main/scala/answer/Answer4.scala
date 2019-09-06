@@ -14,11 +14,11 @@ object Answer4 {
 
     val e2c = eNums.zip(cNums).toMap
     val res = num.toString
-      .reverse.grouped(4)
+      .reverse.grouped(4) //按万,亿分组
       .toSeq.zip(divs).reverse
       .map {
         case (reversedNum, div) =>
-          val nums = reversedNum.zip(smallDivs).reverse
+          val nums = reversedNum.zip(smallDivs).reverse //和十,百,前匹配
           val smallNum = nums.map {
             case (num, smallDiv) =>
               val c = e2c(num)
