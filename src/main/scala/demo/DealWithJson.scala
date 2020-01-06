@@ -20,16 +20,67 @@ object DealWithJson {
     // ..... 不分异常类型的简单处理
   }
 
-  def try_to_int(js: JsValue): Either[Throwable, Int] = {
-    Right(js).flatMap {
-      case JsNumber(v) => Right(v.intValue())
+  def try_to_int(js: JsValue): Try[Int] = {
+    Success(js).flatMap {
+      case JsNumber(v) => Success(v.intValue())
       case JsString(str) => Try {
         str.toInt
-      }.toEither
-      case unexpected => Left(new Exception(s"unexpected value $unexpected"))
+      }
+      case unexpected => Failure(new Exception(s"unexpected content $unexpected"))
+    }
+  }
+
+  def head_by_space(str: Option[String]): Option[String] = {
+    str.flatMap(_.split(" ").headOption)
+  }
+
+  def try_head_by_space_(str: Option[String]): Try[String] = Try {
+    str.get.split(" ").head
+  }
+
+  def head_by_space_str(str: Option[String]): String = {
+    str.flatMap(_.split(" ").headOption).getOrElse("")
+  }
+
+  def most_detailed_json_lookup() = {
+    val json: JsValue = ???
+    json \ "key" match { //匹配一个JsLookupResult
+      //有这个键,列出所有可能的情况
+      case JsDefined(value) => value match {
+        case JsNull => ???
+        case boolean: JsBoolean => ???
+        case JsNumber(value) => ???
+        case JsString(value) => ???
+        case JsArray(value) => ???
+        case JsObject(underlying) => ???
+      }
+      case undefined: JsUndefined =>
+        //处理没有这个键的情况,下方的处理情况是抛出了一个异常说明应该有这个键却没有
+        throw new Exception(s"error occurred when try to get key from $json : ${undefined.validationError}")
+
+    }
+  }
+
+  def simplified_json_lookup() = {
+    val json: JsValue = ???
+    val expectedInt = (json \ "key").as[Int]
+  }
+
+  def simplified_json_lookup2() = {
+    val json: JsValue = ???
+    val expectedInt = (json \ "key").asOpt[Int]
+  }
+
+  def simplified_json_lookup3() = {
+    val json: JsValue = ???
+    val expectedInt = (json \ "key").asOpt[JsValue].map {
+      case JsNumber(num) => num.toInt
+      case JsString(str) => str.toInt
+      case unexpected => throw new Exception(unexpected.toString())
     }
   }
 
   def main(args: Array[String]): Unit = {
+    println(head_by_space(Option(null)))
   }
 }
