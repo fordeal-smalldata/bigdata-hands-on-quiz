@@ -34,10 +34,6 @@ object DealWithJson {
     str.flatMap(_.split(" ").headOption)
   }
 
-  def try_head_by_space_(str: Option[String]): Try[String] = Try {
-    str.get.split(" ").head
-  }
-
   def head_by_space_str(str: Option[String]): String = {
     str.flatMap(_.split(" ").headOption).getOrElse("")
   }
@@ -80,7 +76,27 @@ object DealWithJson {
     }
   }
 
+  def try_head_by_space_(str: String): Try[String] = Try {
+    str.split(" ")(1)
+  }
+
+  def try_to_int(str: String): Try[Int] = Try {
+    str.toInt
+  }
+
+  def keep_even_number(num: Int): Option[Int] = Option(num).filter(_ % 2 == 0)
+
   def main(args: Array[String]): Unit = {
-    println(head_by_space(Option(null)))
+    val num =
+      for (head <- try_head_by_space_("aaa 233").toEither;
+           num <- try_to_int(head).toEither;
+           even <- keep_even_number(num).toRight(new Exception(s"$num is not even")))
+        yield even
+
+    num match {
+      case Right(res) => println(s"success fully get number $res")
+      case Left(e) => println(e)
+      // java.lang.Exception: 233 is not even
+    }
   }
 }
